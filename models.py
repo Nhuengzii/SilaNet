@@ -65,3 +65,36 @@ class DiscriminatorNetwork(nn.Module):
         )
     def forward(self, x):
         return self.main(x)
+
+class DiscriminatorNetwork2(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.main = nn.Sequential(
+            # input shape (3, 64, 64)
+            Conv2d(3, 64, 4, 2, 1, bias=False),
+            LeakyReLU(0.2, inplace=True),
+
+            # (64, 32, 32)
+            Conv2d(64, 128, 4, 2, 1, bias=False),
+            BatchNorm2d(128),
+            LeakyReLU(0.2, True),
+
+            #(128, 16, 16)
+            Conv2d(128, 256, 4, 2, 1, bias=False),
+            BatchNorm2d(256),
+            LeakyReLU(0.2, True),
+
+            #(256, 8, 8)
+            Conv2d(256, 512, 4, 2, 1, bias=False),
+            BatchNorm2d(512),
+            LeakyReLU(0.2, True),
+
+            #(512, 4, 4)
+        )
+        self.last_layer = nn.Sequential(
+            Conv2d(512, 1, 4, 1, 0, bias=False),
+            Sigmoid(),
+        )
+    def forward(self, x):
+        x = self.main(x)
+        return self.last_layer(x)

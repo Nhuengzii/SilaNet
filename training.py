@@ -6,6 +6,7 @@ def training(generator, discriminator, device, num_epochs, dataloader, criterion
     G_losses = []
     D_losses = []
     img_list = []
+    iters = 0
     fixed_noise = torch.randn(64, 100, 1, 1)
     for epoch in range(num_epochs):
         print(f"Current on Epoch {epoch + 1}")
