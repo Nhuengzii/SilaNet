@@ -9,6 +9,7 @@ import numpy as np
 
 # Load your model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("Running using device: ", device)
 generator = GeneratorNetwork()
 generator.load_state_dict(torch.load("./checkpoint/generator_sila_1000.pt", map_location=device))
 generator = generator.to(device)
@@ -19,7 +20,7 @@ def generate_image(s):
     fixed_noise = torch.randn((4, 100, 1, 1)).to(device)
     noise = fixed_noise + s
     with torch.no_grad():
-        images = generator(noise)
+        images = generator(noise).cpu()
         grid = torchvision.utils.make_grid(images, normalize=True, nrow=2)
         fig = plt.figure(figsize=(8, 8))
         plt.axis("off")
