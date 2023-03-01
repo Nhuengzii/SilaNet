@@ -3,6 +3,8 @@ import torch
 from models import GeneratorNetwork
 import torchvision
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("Agg")
 import numpy as np
 
 # Load your model
@@ -34,4 +36,4 @@ iface = gr.Interface(
 
 # Launch the interface
 if __name__ == "__main__":
-    iface.launch()
+    iface.launch(share=True)
