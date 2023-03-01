@@ -8,7 +8,7 @@ matplotlib.use("Agg")
 import numpy as np
 
 # Load your model
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 generator = GeneratorNetwork()
 generator.load_state_dict(torch.load("./checkpoint/generator_sila_1000.pt", map_location=device))
 generator = generator.to(device)
